@@ -2,10 +2,22 @@
 version: '3.0'
 services:
   web:
-    # TODO: image, ports and redis dependency
+# TODO: image, ports and redis dependency
+    image: local_image_name:latest
+    depends_on:
+      - redis
+    ports:
+      - "5000:5000"
     environment:
+      FLASK_ENV: production
       REDIS_HOST: redis
       REDIS_PORT: 6379
   redis:
     image: redis:6.0-rc3
-    # TODO: persistence for redis. You need to persist /data directory.
+# TODO: persistence for redis. You need to persist /data directory.
+    restart: always
+    volumes:
+      - my-datavolume:/data
+
+volumes:
+  my-datavolume:
